@@ -9,6 +9,8 @@ const broadcastChannel = '(removed)';
 const topicName = 'waitForToilet';
 const toiletOpenMessage = '*** T O I L E T  I S  O P E N  ! ! ! ***';
 const toiletCloseMessage = 'toilet closed';
+const unagoCallback = 'https://unatoilet.appspot.com/enqueue';
+// const unagoCallback = `https://task-dot-unabiz-unago.appspot.com/enqueue`;
 
 //  Parameters for calling AWS.
 const awsSigfoxCallback = 'https://91r65moej0.execute-api.ap-southeast-1.amazonaws.com/prod/sigfoxCallback?comment=Sensit_Callback';  //  The callback URL
@@ -146,7 +148,7 @@ function processWeb(req, res) {
   const body = JSON.stringify(response, null, 2);
   console.log(JSON.stringify({ body: req.body, response }, null, 2));
   //  Enqueue a task in unago/task to change bot status to green: https://task-dot-unabiz-unago.appspot.com/enqueue?device=abc&magnet_date=aaa&magnet_status=123
-  const url = `https://task-dot-unabiz-unago.appspot.com/enqueue?device=${response.device}&magnet_date=${response.magnet_date}&magnet_status=${response.magnet_status}`;
+  const url = `${unagoCallback}?device=${response.device}&magnet_date=${response.magnet_date}&magnet_status=${response.magnet_status}`;
   return fetch(url, { method: 'GET', headers })
     .then(result => { console.log(JSON.stringify({ bot: result }, null, 2)); return result; })
     //  Send to AWS.
