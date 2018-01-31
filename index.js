@@ -155,6 +155,7 @@ function processWeb(req, res) {
     .then(() => fetch(awsSigfoxCallback, { method, credentials, headers, body }))
     .then(result => { console.log(JSON.stringify({ aws: result }, null, 2)); return result; })
     //  Call to AWS succeeded. Tell everyone in the waiting_for_relief chat room of the new status.
+    /*  Moved to unago/flex
     .then(() => {
       doorIsOpen = (response.magnet_status === 0);
       //  This broadcast will cause some waiting processes to quit.
@@ -169,6 +170,7 @@ function processWeb(req, res) {
       //  Else just quit.
       return 'OK';
     })
+    */
     .then(() => res.status(200).send('"OK"'))
     .catch(err => {
       //  Call to AWS failed, dump the error.  But don't return error to Sensit.
